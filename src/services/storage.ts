@@ -596,14 +596,18 @@ class StorageService {
     if (updates.isBusiness !== undefined) patch["is_business"] = updates.isBusiness;
     if (updates.businessProfile !== undefined) patch["business_profile"] = updates.businessProfile;
     if (updates.privacySettings !== undefined) {
-      patch["privacy_settings"] = { ...DEFAULT_PRIVACY, ...row.privacy_settings, ...updates.privacySettings };
+      patch["privacy_settings"] = {
+        ...DEFAULT_PRIVACY,
+        ...((row.privacy_settings ?? {}) as Record<string, unknown>),
+        ...updates.privacySettings,
+      };
     }
     if (Object.keys(patch).length === 0) return toUser(row);
 
     cache.profiles[index] = { ...row, ...patch } as ProfileRow;
     emit();
 
-    persist("updateProfile", () => supabase.from("profiles").update(patch).eq("id", uid));
+    persist("updateProfile", () => supabase.from("profiles").update(patch as never).eq("id", uid));
     return toUser(cache.profiles[index]);
   }
 
@@ -680,9 +684,9 @@ class StorageService {
     return isLikedBy(targetId);
   }
 
-  public toggleLike(targetId: string, targetType: LikeRelationship["targetType"]): boolean {
+  public toggleLike(targetId: string, targetType: LikeRelationship["targetType"]): { isLiked: boolean; likesCount: number } {
     const uid = cache.currentUserId;
-    if (!uid) return false;
+    if (!uid) return { isLiked: false, likesCount: this.countLikes(targetId, targetType) };
     const type = normaliseTargetType(targetType);
 
     const existing = cache.likes.find(
@@ -694,7 +698,7 @@ class StorageService {
       persist("unlike", () =>
         supabase.from("likes").delete().eq("user_id", uid).eq("target_id", targetId).eq("target_type", type),
       );
-      return false;
+      return { isLiked: false, likesCount: this.countLikes(targetId, targetType) };
     }
 
     cache.likes = [
@@ -718,7 +722,12 @@ class StorageService {
       }
       return res;
     });
-    return true;
+    return { isLiked: true, likesCount: this.countLikes(targetId, targetType) };
+  }
+
+  private countLikes(targetId: string, targetType: LikeRelationship["targetType"]): number {
+    const type = normaliseTargetType(targetType);
+    return cache.likes.filter((l) => l.target_id === targetId && normaliseTargetType(l.target_type) === type).length;
   }
 
   private resolveOwner(targetId: string, type: string): string | null {
@@ -933,7 +942,7 @@ class StorageService {
       .map(toComment);
   }
 
-  public addComment(targetId: string, targetType: Comment["targetType"], text: string): Comment | null {
+  public addComment(targetId: string, text: string, targetType: Comment["targetType"]): Comment | null {
     const uid = cache.currentUserId;
     if (!uid || !text.trim()) return null;
     const type = normaliseTargetType(targetType);
@@ -1280,7 +1289,7 @@ class StorageService {
         _recipient: targetUserId,
         _currency: currency,
         _amount: amount,
-        _reason: note ?? null,
+        _reason: note ?? undefined,
       });
       await this.refreshWallet();
       return res;
@@ -1298,7 +1307,7 @@ class StorageService {
   }
 
   // Payment methods stay local: PYE has no payment gateway connected yet.
-  public getPaymentMethods(): PaymentMethodConfig[] {
+  public getPaymentMethods(_userId?: string): PaymentMethodConfig[] {
     const uid = cache.currentUserId;
     if (!uid) return [];
     return readLocal<PaymentMethodConfig[]>(`${LOCAL_PAYMENT_METHODS}_${uid}`, []);
@@ -1322,7 +1331,7 @@ class StorageService {
     emit();
   }
 
-  public getPaymentLedger(): PaymentLedgerEntry[] {
+  public getPaymentLedger(_userId?: string): PaymentLedgerEntry[] {
     return [];
   }
 
@@ -1349,6 +1358,13 @@ class StorageService {
       totalShares,
       followers,
       coinsEarned: earned,
+      totalPyesViews: totalViews,
+      totalSoundPlays: cache.sounds
+        .filter((snd) => snd.author_id === userId)
+        .reduce((sum, snd) => sum + (snd.plays_count ?? 0), 0),
+      totalCoinTipsReceived: cache.transactions
+        .filter((t) => t.user_id === userId && t.type === "credit" && /tip|gift/i.test(t.reason ?? ""))
+        .reduce((sum, t) => sum + t.amount, 0),
       engagementRate:
         totalViews > 0 ? Number((((totalLikes + totalComments) / totalViews) * 100).toFixed(1)) : 0,
       topContent: [...pyes]
@@ -1842,15 +1858,62 @@ class StorageService {
     return [];
   }
 
-  public getAds(): Advertisement[] {
+  public getAds(_userId?: string): Advertisement[] {
     return [];
+  }
+
+  /** Submits an ad campaign for review. */
+  public createAd(input: Omit<Advertisement, "id" | "status" | "impressions" | "clicks" | "createdAt">): Advertisement {
+    const ad: Advertisement = { ...input, id: newId(), status: "pending_review" as Advertisement["status"], impressions: 0, clicks: 0, createdAt: nowIso() };
+    persist("createAd", () =>
+      supabase.from("advertisements").insert({
+        id: ad.id,
+        advertiser_id: input.advertiserId,
+        advertiser_name: input.advertiserName,
+        title: input.title,
+        description: input.description,
+        media_url: input.mediaUrl,
+        media_type: input.mediaType,
+        destination_url: input.destinationUrl,
+        call_to_action: input.callToAction,
+        category: input.category,
+        start_date: input.startDate,
+        end_date: input.endDate,
+        budget_coins: input.budgetCoins,
+        target_audience: input.targetAudience,
+      }),
+    );
+    return ad;
+  }
+
+  public createPromotion(input: Omit<PromotedContent, "id" | "status" | "createdAt">): PromotedContent {
+    const promo: PromotedContent = { ...input, id: newId(), status: "pending_review", createdAt: nowIso() };
+    persist("createPromotion", () =>
+      supabase.from("promoted_content").insert({
+        id: promo.id,
+        author_id: input.authorId,
+        content_id: input.contentId,
+        content_type: input.contentType,
+        content_title: input.contentTitle,
+        goal: input.goal,
+        audience: input.audience,
+        duration_days: input.durationDays,
+        budget_coins: input.budgetCoins,
+      }),
+    );
+    return promo;
+  }
+
+  /** Real payments are not connected yet: never credit coins from the browser. */
+  public processFuturePaymentSimulation(_input: unknown): { success: false; error: string } {
+    return { success: false, error: "Coin purchases are not available yet." };
   }
 
   public getActiveAds(): Advertisement[] {
     return [];
   }
 
-  public getPromotions(): PromotedContent[] {
+  public getPromotions(_userId?: string): PromotedContent[] {
     return [];
   }
 }

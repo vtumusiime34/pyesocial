@@ -123,7 +123,7 @@ export function persist(
   void (async () => {
     try {
       const res = await run();
-      if (res && "error" in res && res.error) logError(scope, res.error);
+      if (res && typeof res === "object" && "error" in res && res.error) logError(scope, res.error);
     } catch (error) {
       logError(scope, error);
     }

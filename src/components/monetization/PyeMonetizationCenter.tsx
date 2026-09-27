@@ -236,6 +236,11 @@ export const PyeMonetizationCenter: React.FC<PyeMonetizationCenterProps> = ({
           depositGateway === 'stripe_mock' ? 'Stripe Checkout' : 'Web3 Crypto Gateway'
         }`,
       });
+      if (!res.success) {
+        setIsProcessingPayment(false);
+        showToast(res.error);
+        return;
+      }
 
       setTransactions(Storage.getTransactions(currentUser.id));
       setPaymentLedger(Storage.getPaymentLedger(currentUser.id));
