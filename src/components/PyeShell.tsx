@@ -61,7 +61,7 @@ const VIEW_PATHS: Record<string, string> = {
   profile: "/profile",
   settings: "/settings",
   admin: "/admin",
-  wallet: "/wallet",
+  wallet: "/",
   landing: "/welcome",
   // Removed product areas fall back to the feed.
   tube: "/",

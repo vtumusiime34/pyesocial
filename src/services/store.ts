@@ -116,7 +116,10 @@ function logError(scope: string, error: unknown): void {
 }
 
 /** Fire-and-forget persistence that never breaks the UI. */
-export function persist(scope: string, run: () => Promise<{ error: unknown } | void>): void {
+export function persist(
+  scope: string,
+  run: () => PromiseLike<{ error?: unknown } | void> | Promise<unknown>,
+): void {
   void (async () => {
     try {
       const res = await run();
