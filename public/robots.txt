@@ -4,4 +4,4 @@ Disallow: /messages
 Disallow: /settings
 Disallow: /admin
 
-Sitemap: /sitemap.xml
+Sitemap: https://pyeapp1.lovable.app/sitemap.xml

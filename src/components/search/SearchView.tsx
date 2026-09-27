@@ -77,7 +77,7 @@ export const SearchView: React.FC<SearchViewProps> = ({
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search creators, shorts, tube videos, conferences, #topics..."
+          placeholder="Search creators, PYES, conferences, #topics..."
           className="w-full pl-12 pr-4 py-3.5 bg-[#0f0f18] border border-white/10 rounded-2xl text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-[#ff1493] focus:ring-1 focus:ring-[#ff1493] transition shadow-xl"
         />
         {query && (
@@ -144,17 +144,6 @@ export const SearchView: React.FC<SearchViewProps> = ({
           <span>PYES ({matchedShorts.length})</span>
         </button>
 
-        <button
-          onClick={() => setActiveTab('tube')}
-          className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-semibold whitespace-nowrap transition flex items-center justify-center gap-1 ${
-            activeTab === 'tube'
-              ? 'bg-gradient-to-r from-[#ff1493] to-[#ff8c00] text-white shadow'
-              : 'text-zinc-400 hover:text-white'
-          }`}
-        >
-          <Tv className="w-3.5 h-3.5" />
-          <span>Tube ({matchedTubes.length})</span>
-        </button>
 
         <button
           onClick={() => setActiveTab('conferences')}
