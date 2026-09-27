@@ -172,7 +172,7 @@ export function PyeShell({ view, profileUsername, initialQuery = "" }: PyeShellP
         searchQuery={searchQuery}
         onSearchChange={(q: string) => {
           setSearchQuery(q);
-          void navigate({ to: "/search", search: { q: q || undefined } });
+          void navigate({ to: "/search", search: { q } });
         }}
         unreadNotificationsCount={unreadNotificationsCount}
         unreadMessagesCount={unreadMessagesCount}
