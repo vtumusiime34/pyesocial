@@ -471,6 +471,30 @@ export type Database = {
           },
         ]
       }
+      mission_claims: {
+        Row: {
+          claim_date: string
+          created_at: string
+          id: string
+          mission_id: string
+          user_id: string
+        }
+        Insert: {
+          claim_date?: string
+          created_at?: string
+          id?: string
+          mission_id: string
+          user_id: string
+        }
+        Update: {
+          claim_date?: string
+          created_at?: string
+          id?: string
+          mission_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           actor_id: string | null
@@ -863,12 +887,52 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_set_deactivated: {
+        Args: { _deactivated: boolean; _user_id: string }
+        Returns: Json
+      }
+      admin_set_verified: {
+        Args: { _user_id: string; _verified: boolean }
+        Returns: Json
+      }
+      claim_mission_reward: { Args: { _mission_id: string }; Returns: Json }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      increment_post_shares: { Args: { _post_id: string }; Returns: undefined }
+      increment_pyes_shares: { Args: { _pyes_id: string }; Returns: undefined }
+      increment_pyes_views: { Args: { _pyes_id: string }; Returns: undefined }
+      increment_sound_plays: { Args: { _sound_id: string }; Returns: undefined }
+      increment_sound_usage: { Args: { _sound_id: string }; Returns: undefined }
+      log_admin_action: {
+        Args: { _action: string; _details: string; _target: string }
+        Returns: undefined
+      }
+      mission_reward: {
+        Args: { _mission_id: string }
+        Returns: Record<string, unknown>
+      }
+      record_game_outcome: {
+        Args: {
+          _game_id: string
+          _opponent_name: string
+          _result: string
+          _score: number
+        }
+        Returns: Json
+      }
+      send_coins: {
+        Args: {
+          _amount: number
+          _currency: string
+          _reason?: string
+          _recipient: string
+        }
+        Returns: Json
       }
     }
     Enums: {

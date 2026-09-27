@@ -15,6 +15,13 @@
       "when": 1790515657486,
       "tag": "0001_pye_social_games_moderation",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790515721514,
+      "tag": "0002_pye_secure_rpcs",
+      "breakpoints": true
     }
   ]
 }
