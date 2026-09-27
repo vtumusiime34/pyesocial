@@ -14,6 +14,147 @@ export type Database = {
   }
   public: {
     Tables: {
+      account_appeals: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          status: string
+          user_id: string | null
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string
+          id?: string
+          message: string
+          status?: string
+          user_id?: string | null
+          username?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          status?: string
+          user_id?: string | null
+          username?: string
+        }
+        Relationships: []
+      }
+      advertisements: {
+        Row: {
+          advertiser_id: string
+          advertiser_name: string
+          budget_coins: number
+          call_to_action: string
+          category: string
+          clicks: number
+          created_at: string
+          description: string
+          destination_url: string
+          end_date: string
+          id: string
+          impressions: number
+          media_type: string
+          media_url: string
+          start_date: string
+          status: string
+          target_audience: string
+          title: string
+        }
+        Insert: {
+          advertiser_id: string
+          advertiser_name?: string
+          budget_coins?: number
+          call_to_action?: string
+          category?: string
+          clicks?: number
+          created_at?: string
+          description?: string
+          destination_url?: string
+          end_date?: string
+          id?: string
+          impressions?: number
+          media_type?: string
+          media_url?: string
+          start_date?: string
+          status?: string
+          target_audience?: string
+          title: string
+        }
+        Update: {
+          advertiser_id?: string
+          advertiser_name?: string
+          budget_coins?: number
+          call_to_action?: string
+          category?: string
+          clicks?: number
+          created_at?: string
+          description?: string
+          destination_url?: string
+          end_date?: string
+          id?: string
+          impressions?: number
+          media_type?: string
+          media_url?: string
+          start_date?: string
+          status?: string
+          target_audience?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      audit_logs: {
+        Row: {
+          action: string
+          admin_id: string
+          created_at: string
+          details: string
+          id: string
+          target: string
+        }
+        Insert: {
+          action: string
+          admin_id: string
+          created_at?: string
+          details?: string
+          id?: string
+          target?: string
+        }
+        Update: {
+          action?: string
+          admin_id?: string
+          created_at?: string
+          details?: string
+          id?: string
+          target?: string
+        }
+        Relationships: []
+      }
+      blocked_users: {
+        Row: {
+          blocked_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          blocked_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          blocked_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       coin_transactions: {
         Row: {
           amount: number
@@ -74,6 +215,110 @@ export type Database = {
         }
         Relationships: []
       }
+      conference_participants: {
+        Row: {
+          conference_id: string
+          id: string
+          joined_at: string
+          user_id: string
+        }
+        Insert: {
+          conference_id: string
+          id?: string
+          joined_at?: string
+          user_id: string
+        }
+        Update: {
+          conference_id?: string
+          id?: string
+          joined_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conference_participants_conference_id_fkey"
+            columns: ["conference_id"]
+            isOneToOne: false
+            referencedRelation: "conferences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conferences: {
+        Row: {
+          category: string
+          cover_image: string
+          created_at: string
+          description: string
+          host_id: string
+          id: string
+          max_participants: number
+          privacy: string
+          scheduled_date: string
+          scheduled_time: string
+          speakers: string[]
+          sponsored_by: string | null
+          title: string
+        }
+        Insert: {
+          category?: string
+          cover_image?: string
+          created_at?: string
+          description?: string
+          host_id: string
+          id?: string
+          max_participants?: number
+          privacy?: string
+          scheduled_date?: string
+          scheduled_time?: string
+          speakers?: string[]
+          sponsored_by?: string | null
+          title: string
+        }
+        Update: {
+          category?: string
+          cover_image?: string
+          created_at?: string
+          description?: string
+          host_id?: string
+          id?: string
+          max_participants?: number
+          privacy?: string
+          scheduled_date?: string
+          scheduled_time?: string
+          speakers?: string[]
+          sponsored_by?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      conversations: {
+        Row: {
+          created_at: string
+          id: string
+          last_message: string
+          last_message_at: string
+          user_a: string
+          user_b: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_message?: string
+          last_message_at?: string
+          user_a: string
+          user_b: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_message?: string
+          last_message_at?: string
+          user_a?: string
+          user_b?: string
+        }
+        Relationships: []
+      }
       follows: {
         Row: {
           created_at: string
@@ -92,6 +337,78 @@ export type Database = {
           follower_id?: string
           following_id?: string
           id?: string
+        }
+        Relationships: []
+      }
+      game_records: {
+        Row: {
+          coins_earned: number
+          game_id: string
+          id: string
+          opponent_name: string
+          played_at: string
+          result: string
+          score: number
+          user_id: string
+        }
+        Insert: {
+          coins_earned?: number
+          game_id: string
+          id?: string
+          opponent_name?: string
+          played_at?: string
+          result: string
+          score?: number
+          user_id: string
+        }
+        Update: {
+          coins_earned?: number
+          game_id?: string
+          id?: string
+          opponent_name?: string
+          played_at?: string
+          result?: string
+          score?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      game_rooms: {
+        Row: {
+          created_at: string
+          game_id: string
+          guest_id: string | null
+          host_id: string
+          id: string
+          state: Json
+          status: string
+          turn_user_id: string | null
+          updated_at: string
+          winner_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          game_id: string
+          guest_id?: string | null
+          host_id: string
+          id?: string
+          state?: Json
+          status?: string
+          turn_user_id?: string | null
+          updated_at?: string
+          winner_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          game_id?: string
+          guest_id?: string | null
+          host_id?: string
+          id?: string
+          state?: Json
+          status?: string
+          turn_user_id?: string | null
+          updated_at?: string
+          winner_id?: string | null
         }
         Relationships: []
       }
@@ -115,6 +432,77 @@ export type Database = {
           id?: string
           target_id?: string
           target_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          conversation_id: string
+          created_at: string
+          id: string
+          read_at: string | null
+          sender_id: string
+          text: string
+        }
+        Insert: {
+          conversation_id: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          sender_id: string
+          text: string
+        }
+        Update: {
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          sender_id?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          actor_id: string | null
+          content: string
+          created_at: string
+          id: string
+          is_read: boolean
+          target_id: string | null
+          target_type: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          actor_id?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          target_id?: string | null
+          target_type?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          actor_id?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          target_id?: string | null
+          target_type?: string | null
+          type?: string
           user_id?: string
         }
         Relationships: []
@@ -218,6 +606,48 @@ export type Database = {
         }
         Relationships: []
       }
+      promoted_content: {
+        Row: {
+          audience: string
+          author_id: string
+          budget_coins: number
+          content_id: string
+          content_title: string
+          content_type: string
+          created_at: string
+          duration_days: number
+          goal: string
+          id: string
+          status: string
+        }
+        Insert: {
+          audience?: string
+          author_id: string
+          budget_coins?: number
+          content_id: string
+          content_title?: string
+          content_type: string
+          created_at?: string
+          duration_days?: number
+          goal?: string
+          id?: string
+          status?: string
+        }
+        Update: {
+          audience?: string
+          author_id?: string
+          budget_coins?: number
+          content_id?: string
+          content_title?: string
+          content_type?: string
+          created_at?: string
+          duration_days?: number
+          goal?: string
+          id?: string
+          status?: string
+        }
+        Relationships: []
+      }
       pyes: {
         Row: {
           author_id: string
@@ -272,6 +702,42 @@ export type Database = {
           video_url?: string
           views_count?: number
           visibility?: string
+        }
+        Relationships: []
+      }
+      safety_reports: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          reason: string
+          reported_item_id: string
+          reported_item_type: string
+          reported_title: string | null
+          reporter_id: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: string
+          reason: string
+          reported_item_id: string
+          reported_item_type: string
+          reported_title?: string | null
+          reporter_id: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          reason?: string
+          reported_item_id?: string
+          reported_item_type?: string
+          reported_title?: string | null
+          reporter_id?: string
+          status?: string
         }
         Relationships: []
       }
