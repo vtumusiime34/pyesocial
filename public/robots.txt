@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /messages
-Disallow: /settings
-Disallow: /admin
 
 Sitemap: https://pyeapp1.lovable.app/sitemap.xml

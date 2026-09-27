@@ -8,7 +8,6 @@ export const Route = createFileRoute("/settings")({
       { name: "description", content: "Manage your PYE account, privacy and safety settings." },
       { property: "og:title", content: "Settings | PYE" },
       { property: "og:description", content: "Manage your PYE account and privacy." },
-      { name: "robots", content: "noindex" },
     ],
   }),
   component: () => <PyeShell view="settings" />,
