@@ -16,10 +16,12 @@ import { Route as GamesRouteImport } from './routes/games'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as PyesRouteImport } from './routes/pyes'
 import { Route as RankingsRouteImport } from './routes/rankings'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SoundsRouteImport } from './routes/sounds'
 import { Route as SpacesRouteImport } from './routes/spaces'
 import { Route as StudioRouteImport } from './routes/studio'
+import { Route as ProfileUsernameRouteImport } from './routes/profile.$username'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -56,6 +58,11 @@ const RankingsRoute = RankingsRouteImport.update({
   path: '/rankings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -76,6 +83,11 @@ const StudioRoute = StudioRouteImport.update({
   path: '/studio',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileUsernameRoute = ProfileUsernameRouteImport.update({
+  id: '/profile/$username',
+  path: '/profile/$username',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -85,10 +97,12 @@ export interface FileRoutesByFullPath {
   '/messages': typeof MessagesRoute
   '/pyes': typeof PyesRoute
   '/rankings': typeof RankingsRoute
+  '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/sounds': typeof SoundsRoute
   '/spaces': typeof SpacesRoute
   '/studio': typeof StudioRoute
+  '/profile/$username': typeof ProfileUsernameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -98,10 +112,12 @@ export interface FileRoutesByTo {
   '/messages': typeof MessagesRoute
   '/pyes': typeof PyesRoute
   '/rankings': typeof RankingsRoute
+  '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/sounds': typeof SoundsRoute
   '/spaces': typeof SpacesRoute
   '/studio': typeof StudioRoute
+  '/profile/$username': typeof ProfileUsernameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -112,10 +128,12 @@ export interface FileRoutesById {
   '/messages': typeof MessagesRoute
   '/pyes': typeof PyesRoute
   '/rankings': typeof RankingsRoute
+  '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/sounds': typeof SoundsRoute
   '/spaces': typeof SpacesRoute
   '/studio': typeof StudioRoute
+  '/profile/$username': typeof ProfileUsernameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -127,10 +145,12 @@ export interface FileRouteTypes {
     | '/messages'
     | '/pyes'
     | '/rankings'
+    | '/search'
     | '/settings'
     | '/sounds'
     | '/spaces'
     | '/studio'
+    | '/profile/$username'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -140,10 +160,12 @@ export interface FileRouteTypes {
     | '/messages'
     | '/pyes'
     | '/rankings'
+    | '/search'
     | '/settings'
     | '/sounds'
     | '/spaces'
     | '/studio'
+    | '/profile/$username'
   id:
     | '__root__'
     | '/'
@@ -153,10 +175,12 @@ export interface FileRouteTypes {
     | '/messages'
     | '/pyes'
     | '/rankings'
+    | '/search'
     | '/settings'
     | '/sounds'
     | '/spaces'
     | '/studio'
+    | '/profile/$username'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -167,10 +191,12 @@ export interface RootRouteChildren {
   MessagesRoute: typeof MessagesRoute
   PyesRoute: typeof PyesRoute
   RankingsRoute: typeof RankingsRoute
+  SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
   SoundsRoute: typeof SoundsRoute
   SpacesRoute: typeof SpacesRoute
   StudioRoute: typeof StudioRoute
+  ProfileUsernameRoute: typeof ProfileUsernameRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -224,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RankingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -252,6 +285,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile/$username': {
+      id: '/profile/$username'
+      path: '/profile/$username'
+      fullPath: '/profile/$username'
+      preLoaderRoute: typeof ProfileUsernameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -263,10 +303,12 @@ const rootRouteChildren: RootRouteChildren = {
   MessagesRoute: MessagesRoute,
   PyesRoute: PyesRoute,
   RankingsRoute: RankingsRoute,
+  SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
   SoundsRoute: SoundsRoute,
   SpacesRoute: SpacesRoute,
   StudioRoute: StudioRoute,
+  ProfileUsernameRoute: ProfileUsernameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
