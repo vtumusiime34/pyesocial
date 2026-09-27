@@ -11,7 +11,8 @@ import {
   Compass,
 } from 'lucide-react';
 import { User } from '../../types';
-import { Storage, PYE_SPACES } from '../../services/storage';
+import { Storage } from '../../services/storage';
+import { PYE_SPACES } from '../../services/spaces';
 import { PyeLogo } from '../ui/PyeLogo';
 
 interface CreateModalProps {

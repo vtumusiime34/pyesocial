@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Sparkles, CheckCircle, TrendingUp, Calendar, ChevronRight, Compass, Share2 } from 'lucide-react';
 import { User, Conference } from '../../types';
-import { PYE_SPACES } from '../../services/storage';
+import { PYE_SPACES } from '../../services/spaces';
 
 interface RightSidebarProps {
   creators: User[];
