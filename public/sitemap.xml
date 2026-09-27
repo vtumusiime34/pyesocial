@@ -11,4 +11,8 @@
   <url><loc>https://pyeapp1.lovable.app/studio</loc></url>
   <url><loc>https://pyeapp1.lovable.app/search</loc></url>
   <url><loc>https://pyeapp1.lovable.app/auth</loc></url>
+  <url><loc>https://pyeapp1.lovable.app/auth?tab=signup</loc></url>
+  <url><loc>https://pyeapp1.lovable.app/auth?tab=login</loc></url>
+  <url><loc>https://pyeapp1.lovable.app/messages</loc></url>
+  <url><loc>https://pyeapp1.lovable.app/settings</loc></url>
 </urlset>
