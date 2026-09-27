@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ConferencesRouteImport } from './routes/conferences'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as MessagesRouteImport } from './routes/messages'
@@ -21,6 +22,7 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SoundsRouteImport } from './routes/sounds'
 import { Route as SpacesRouteImport } from './routes/spaces'
 import { Route as StudioRouteImport } from './routes/studio'
+import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as ProfileUsernameRouteImport } from './routes/profile.$username'
 
 const IndexRoute = IndexRouteImport.update({
@@ -31,6 +33,11 @@ const IndexRoute = IndexRouteImport.update({
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConferencesRoute = ConferencesRouteImport.update({
@@ -83,6 +90,11 @@ const StudioRoute = StudioRouteImport.update({
   path: '/studio',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileUsernameRoute = ProfileUsernameRouteImport.update({
   id: '/profile/$username',
   path: '/profile/$username',
@@ -92,6 +104,7 @@ const ProfileUsernameRoute = ProfileUsernameRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/auth': typeof AuthRoute
   '/conferences': typeof ConferencesRoute
   '/games': typeof GamesRoute
   '/messages': typeof MessagesRoute
@@ -102,11 +115,13 @@ export interface FileRoutesByFullPath {
   '/sounds': typeof SoundsRoute
   '/spaces': typeof SpacesRoute
   '/studio': typeof StudioRoute
+  '/welcome': typeof WelcomeRoute
   '/profile/$username': typeof ProfileUsernameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/auth': typeof AuthRoute
   '/conferences': typeof ConferencesRoute
   '/games': typeof GamesRoute
   '/messages': typeof MessagesRoute
@@ -117,12 +132,14 @@ export interface FileRoutesByTo {
   '/sounds': typeof SoundsRoute
   '/spaces': typeof SpacesRoute
   '/studio': typeof StudioRoute
+  '/welcome': typeof WelcomeRoute
   '/profile/$username': typeof ProfileUsernameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/auth': typeof AuthRoute
   '/conferences': typeof ConferencesRoute
   '/games': typeof GamesRoute
   '/messages': typeof MessagesRoute
@@ -133,6 +150,7 @@ export interface FileRoutesById {
   '/sounds': typeof SoundsRoute
   '/spaces': typeof SpacesRoute
   '/studio': typeof StudioRoute
+  '/welcome': typeof WelcomeRoute
   '/profile/$username': typeof ProfileUsernameRoute
 }
 export interface FileRouteTypes {
@@ -140,6 +158,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/auth'
     | '/conferences'
     | '/games'
     | '/messages'
@@ -150,11 +169,13 @@ export interface FileRouteTypes {
     | '/sounds'
     | '/spaces'
     | '/studio'
+    | '/welcome'
     | '/profile/$username'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
+    | '/auth'
     | '/conferences'
     | '/games'
     | '/messages'
@@ -165,11 +186,13 @@ export interface FileRouteTypes {
     | '/sounds'
     | '/spaces'
     | '/studio'
+    | '/welcome'
     | '/profile/$username'
   id:
     | '__root__'
     | '/'
     | '/admin'
+    | '/auth'
     | '/conferences'
     | '/games'
     | '/messages'
@@ -180,12 +203,14 @@ export interface FileRouteTypes {
     | '/sounds'
     | '/spaces'
     | '/studio'
+    | '/welcome'
     | '/profile/$username'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
+  AuthRoute: typeof AuthRoute
   ConferencesRoute: typeof ConferencesRoute
   GamesRoute: typeof GamesRoute
   MessagesRoute: typeof MessagesRoute
@@ -196,6 +221,7 @@ export interface RootRouteChildren {
   SoundsRoute: typeof SoundsRoute
   SpacesRoute: typeof SpacesRoute
   StudioRoute: typeof StudioRoute
+  WelcomeRoute: typeof WelcomeRoute
   ProfileUsernameRoute: typeof ProfileUsernameRoute
 }
 
@@ -213,6 +239,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conferences': {
@@ -285,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile/$username': {
       id: '/profile/$username'
       path: '/profile/$username'
@@ -298,6 +338,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
+  AuthRoute: AuthRoute,
   ConferencesRoute: ConferencesRoute,
   GamesRoute: GamesRoute,
   MessagesRoute: MessagesRoute,
@@ -308,6 +349,7 @@ const rootRouteChildren: RootRouteChildren = {
   SoundsRoute: SoundsRoute,
   SpacesRoute: SpacesRoute,
   StudioRoute: StudioRoute,
+  WelcomeRoute: WelcomeRoute,
   ProfileUsernameRoute: ProfileUsernameRoute,
 }
 export const routeTree = rootRouteImport
