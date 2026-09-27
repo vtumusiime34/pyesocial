@@ -164,7 +164,7 @@ export const CreatorStudio: React.FC<CreatorStudioProps> = ({
               7-Day Reach & Engagement Trajectory
             </h3>
             <p className="text-xs text-zinc-400">
-              Aggregated daily interactions across PYES, Tube, and Live streams.
+              Aggregated daily interactions across your posts and PYES.
             </p>
           </div>
           <span className="px-2.5 py-1 rounded-full bg-white/5 text-[11px] font-mono text-zinc-300">

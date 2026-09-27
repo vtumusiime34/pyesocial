@@ -83,7 +83,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnter, onExplore }) 
             <span className="pye-gradient-text">It's a universe.</span>
           </h1>
           <p className="text-sm sm:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            PYE fuses short-form vertical reels, high-definition tube videos, low-latency live streaming, virtual multi-speaker summits, and an authoritative digital economy into one seamless ecosystem.
+            PYE fuses short-form vertical reels, sounds, games, virtual multi-speaker summits, and a real digital coin economy into one seamless ecosystem.
           </p>
         </div>
 
@@ -116,17 +116,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnter, onExplore }) 
 
           <div className="p-4 rounded-2xl bg-[#0f0f18]/80 border border-white/10 backdrop-blur-md space-y-2">
             <Tv className="w-6 h-6 text-[#ff8c00]" />
-            <h3 className="text-sm font-bold text-white">PYE Tube</h3>
+            <h3 className="text-sm font-bold text-white">PYE Sounds</h3>
             <p className="text-xs text-zinc-400">
-              Long-form documentary, masterclass, and tech broadcasts with full scrub control.
+              Discover, play and reuse trending sounds for your PYES.
             </p>
           </div>
 
           <div className="p-4 rounded-2xl bg-[#0f0f18]/80 border border-white/10 backdrop-blur-md space-y-2">
             <Radio className="w-6 h-6 text-rose-500" />
-            <h3 className="text-sm font-bold text-white">PYE Live</h3>
+            <h3 className="text-sm font-bold text-white">PYE Games</h3>
             <p className="text-xs text-zinc-400">
-              Sub-second live streaming, real-time viewer chat, and virtual coin tipping.
+              Play multiplayer games with friends and earn SPC rewards.
             </p>
           </div>
 
