@@ -460,6 +460,7 @@ export const PyeShorts: React.FC<PyeShortsProps> = ({
 
     try {
       const newComment = Storage.addComment(currentPyes.id, commentText.trim(), 'pyes');
+      if (!newComment) return;
       setComments((prev) => [newComment, ...prev]);
       setCommentText('');
 

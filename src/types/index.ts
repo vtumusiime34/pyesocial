@@ -15,9 +15,9 @@ export interface BusinessProfile {
   website?: string;
   contactEmail?: string;
   location?: string;
-  description: string;
+  description?: string;
   verificationStatus: 'unverified' | 'pending' | 'verified';
-  registeredAt: string;
+  registeredAt?: string;
 }
 
 export interface User {

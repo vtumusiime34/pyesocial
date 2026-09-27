@@ -101,7 +101,7 @@ export function PyeShell({ view, profileUsername, initialQuery = "" }: PyeShellP
       if (currentUser) {
         void navigate({ to: "/profile/$username", params: { username: currentUser.username } });
       } else {
-        void navigate({ to: "/auth" });
+        void navigate({ to: "/auth", search: { tab: "login" } });
       }
       return;
     }
@@ -172,7 +172,7 @@ export function PyeShell({ view, profileUsername, initialQuery = "" }: PyeShellP
         searchQuery={searchQuery}
         onSearchChange={(q: string) => {
           setSearchQuery(q);
-          void navigate({ to: "/search", search: q ? { q } : {} });
+          void navigate({ to: "/search", search: { q } });
         }}
         unreadNotificationsCount={unreadNotificationsCount}
         unreadMessagesCount={unreadMessagesCount}
@@ -326,7 +326,6 @@ export function PyeShell({ view, profileUsername, initialQuery = "" }: PyeShellP
           setShowCreateModal(false);
           handleOpenAuth("login");
         }}
-        onGoLiveTrigger={() => go("conferences")}
         onGoConferenceTrigger={() => go("conferences")}
       />
 

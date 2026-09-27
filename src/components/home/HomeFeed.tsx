@@ -127,7 +127,7 @@ export const HomeFeed: React.FC<HomeFeedProps> = ({
     const newCmt = Storage.addComment(postId, commentText, 'post');
     setCommentsMap((prev) => ({
       ...prev,
-      [postId]: [newCmt, ...(prev[postId] || [])],
+      [postId]: newCmt ? [newCmt, ...(prev[postId] || [])] : prev[postId] || [],
     }));
     setPosts((prev) =>
       prev.map((p) => (p.id === postId ? { ...p, commentsCount: p.commentsCount + 1 } : p))
