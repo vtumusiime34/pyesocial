@@ -1857,3 +1857,4 @@ class StorageService {
 
 export const Storage = new StorageService();
 export default Storage;
+export { PYE_SPACES } from "@/services/spaces";
