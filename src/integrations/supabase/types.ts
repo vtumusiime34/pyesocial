@@ -14,16 +14,399 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      coin_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          reason: string
+          status: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency: string
+          id?: string
+          reason?: string
+          status?: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          reason?: string
+          status?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      comments: {
+        Row: {
+          author_id: string
+          created_at: string
+          id: string
+          target_id: string
+          target_type: string
+          text: string
+        }
+        Insert: {
+          author_id: string
+          created_at?: string
+          id?: string
+          target_id: string
+          target_type: string
+          text: string
+        }
+        Update: {
+          author_id?: string
+          created_at?: string
+          id?: string
+          target_id?: string
+          target_type?: string
+          text?: string
+        }
+        Relationships: []
+      }
+      follows: {
+        Row: {
+          created_at: string
+          follower_id: string
+          following_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          follower_id: string
+          following_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          follower_id?: string
+          following_id?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      likes: {
+        Row: {
+          created_at: string
+          id: string
+          target_id: string
+          target_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          target_id: string
+          target_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          target_id?: string
+          target_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      posts: {
+        Row: {
+          author_id: string
+          caption: string
+          created_at: string
+          hashtags: string[]
+          id: string
+          media_type: string | null
+          media_url: string | null
+          shares_count: number
+          space_slug: string | null
+        }
+        Insert: {
+          author_id: string
+          caption?: string
+          created_at?: string
+          hashtags?: string[]
+          id?: string
+          media_type?: string | null
+          media_url?: string | null
+          shares_count?: number
+          space_slug?: string | null
+        }
+        Update: {
+          author_id?: string
+          caption?: string
+          created_at?: string
+          hashtags?: string[]
+          id?: string
+          media_type?: string | null
+          media_url?: string | null
+          shares_count?: number
+          space_slug?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar: string
+          banner: string | null
+          bio: string
+          birth_date: string | null
+          business_profile: Json | null
+          created_at: string
+          email: string
+          full_name: string
+          gender: string | null
+          id: string
+          is_business: boolean
+          is_deactivated: boolean
+          is_verified: boolean
+          phone: string | null
+          pie_id: string
+          privacy_settings: Json
+          role: Database["public"]["Enums"]["app_role"]
+          username: string
+        }
+        Insert: {
+          avatar?: string
+          banner?: string | null
+          bio?: string
+          birth_date?: string | null
+          business_profile?: Json | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          gender?: string | null
+          id: string
+          is_business?: boolean
+          is_deactivated?: boolean
+          is_verified?: boolean
+          phone?: string | null
+          pie_id: string
+          privacy_settings?: Json
+          role?: Database["public"]["Enums"]["app_role"]
+          username: string
+        }
+        Update: {
+          avatar?: string
+          banner?: string | null
+          bio?: string
+          birth_date?: string | null
+          business_profile?: Json | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          gender?: string | null
+          id?: string
+          is_business?: boolean
+          is_deactivated?: boolean
+          is_verified?: boolean
+          phone?: string | null
+          pie_id?: string
+          privacy_settings?: Json
+          role?: Database["public"]["Enums"]["app_role"]
+          username?: string
+        }
+        Relationships: []
+      }
+      pyes: {
+        Row: {
+          author_id: string
+          caption: string
+          created_at: string
+          hashtags: string[]
+          id: string
+          moderation_status: string
+          music_author: string | null
+          music_title: string | null
+          poster_url: string
+          shares_count: number
+          sound_id: string | null
+          space_slug: string | null
+          title: string | null
+          video_url: string
+          views_count: number
+          visibility: string
+        }
+        Insert: {
+          author_id: string
+          caption?: string
+          created_at?: string
+          hashtags?: string[]
+          id?: string
+          moderation_status?: string
+          music_author?: string | null
+          music_title?: string | null
+          poster_url?: string
+          shares_count?: number
+          sound_id?: string | null
+          space_slug?: string | null
+          title?: string | null
+          video_url: string
+          views_count?: number
+          visibility?: string
+        }
+        Update: {
+          author_id?: string
+          caption?: string
+          created_at?: string
+          hashtags?: string[]
+          id?: string
+          moderation_status?: string
+          music_author?: string | null
+          music_title?: string | null
+          poster_url?: string
+          shares_count?: number
+          sound_id?: string | null
+          space_slug?: string | null
+          title?: string | null
+          video_url?: string
+          views_count?: number
+          visibility?: string
+        }
+        Relationships: []
+      }
+      saves: {
+        Row: {
+          created_at: string
+          id: string
+          target_id: string
+          target_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          target_id: string
+          target_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          target_id?: string
+          target_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      sounds: {
+        Row: {
+          artist: string
+          audio_url: string
+          author_id: string | null
+          category: string
+          cover_url: string
+          created_at: string
+          duration: string
+          id: string
+          plays_count: number
+          tags: string[]
+          title: string
+          usage_count: number
+        }
+        Insert: {
+          artist?: string
+          audio_url: string
+          author_id?: string | null
+          category?: string
+          cover_url?: string
+          created_at?: string
+          duration?: string
+          id?: string
+          plays_count?: number
+          tags?: string[]
+          title: string
+          usage_count?: number
+        }
+        Update: {
+          artist?: string
+          audio_url?: string
+          author_id?: string | null
+          category?: string
+          cover_url?: string
+          created_at?: string
+          duration?: string
+          id?: string
+          plays_count?: number
+          tags?: string[]
+          title?: string
+          usage_count?: number
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wallets: {
+        Row: {
+          gold_coins: number
+          last_daily_claim_at: string | null
+          signup_bonus_granted: boolean
+          silver_coins: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          gold_coins?: number
+          last_daily_claim_at?: string | null
+          signup_bonus_granted?: boolean
+          silver_coins?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          gold_coins?: number
+          last_daily_claim_at?: string | null
+          signup_bonus_granted?: boolean
+          silver_coins?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "user" | "creator" | "admin" | "business"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +533,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["user", "creator", "admin", "business"],
+    },
   },
 } as const
