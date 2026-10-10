@@ -1,5 +1,7 @@
 // PYE Social Universe - WebRTC Real-Time Audio & Video Calling Engine
 import { CallType, CallStatus, CallSession, User } from '../types';
+import { supabase } from '@/integrations/supabase/client';
+import type { RealtimeChannel } from '@supabase/supabase-js';
 
 export type CallEventListener = (event: {
   type: 'incoming_call' | 'call_connected' | 'call_ended' | 'remote_stream' | 'error';
@@ -20,15 +22,29 @@ class WebRTCService {
   private ringGain: GainNode | null = null;
   private ringInterval: any = null;
 
-  constructor() {
-    if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
-      try {
-        this.broadcastChannel = new BroadcastChannel('pye_webrtc_signaling');
-        this.broadcastChannel.onmessage = (event) => this.handleSignalingMessage(event.data);
-      } catch (e) {
-        console.warn('BroadcastChannel not supported', e);
-      }
-    }
+  private myChannel: RealtimeChannel | null = null;
+  private myUserId: string | null = null;
+  private outChannels = new Map<string, RealtimeChannel>();
+
+  /** Listen for calls addressed to this signed-in user (Lovable Cloud realtime signaling). */
+  public setUser(userId: string | null) {
+    if (userId === this.myUserId) return;
+    if (this.myChannel) supabase.removeChannel(this.myChannel);
+    this.outChannels.forEach((c) => supabase.removeChannel(c));
+    this.outChannels.clear();
+    this.myChannel = null;
+    this.myUserId = userId;
+    if (!userId) return;
+    this.myChannel = supabase
+      .channel(`pye-call-${userId}`)
+      .on('broadcast', { event: 'signal' }, ({ payload }) => this.handleSignalingMessage(payload))
+      .subscribe();
+  }
+
+  private peerIdFor(): string | null {
+    const s = this.currentSession;
+    if (!s || !this.myUserId) return null;
+    return s.callerId === this.myUserId ? s.receiverId : s.callerId;
   }
 
   public subscribe(listener: CallEventListener): () => void {
@@ -328,11 +344,9 @@ class WebRTCService {
     if (data.type === 'CALL_OFFER') {
       const session = data.session as CallSession;
       // If user is the receiver and not currently on call
-      const currentStoredUser = localStorage.getItem('pye_current_user');
-      if (currentStoredUser) {
+      {
         try {
-          const user = JSON.parse(currentStoredUser);
-          if (user.id === session.receiverId && !this.currentSession) {
+          if (this.myUserId === session.receiverId && !this.currentSession) {
             this.currentSession = { ...session, status: 'incoming' };
             this.startRinging();
             this.notify({ type: 'incoming_call', session: this.currentSession });
@@ -361,10 +375,16 @@ class WebRTCService {
     }
   }
 
-  private sendSignalingMessage(msg: any) {
-    try {
-      this.broadcastChannel?.postMessage(msg);
-    } catch {}
+  private sendSignalingMessage(msg: any, toUserId?: string) {
+    const target = toUserId || msg?.session?.receiverId && msg.session.receiverId !== this.myUserId ? (toUserId || msg.session.receiverId) : this.peerIdFor();
+    if (!target) return;
+    let ch = this.outChannels.get(target);
+    if (!ch) {
+      ch = supabase.channel(`pye-call-${target}`);
+      ch.subscribe();
+      this.outChannels.set(target, ch);
+    }
+    ch.send({ type: 'broadcast', event: 'signal', payload: msg }).catch(() => {});
   }
 
   private cleanupPeer() {
