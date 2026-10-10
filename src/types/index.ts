@@ -507,3 +507,23 @@ export interface PaymentLedgerEntry {
   createdAt: string;
 }
 
+export type CallType = 'voice' | 'video';
+export type CallStatus = 'idle' | 'outgoing' | 'incoming' | 'connected' | 'ended' | 'rejected' | 'failed';
+
+export interface CallSession {
+  id: string;
+  callerId: string;
+  callerName: string;
+  callerAvatar: string;
+  receiverId: string;
+  receiverName: string;
+  receiverAvatar: string;
+  type: CallType;
+  status: CallStatus;
+  startedAt?: string;
+  endedAt?: string;
+  offer?: RTCSessionDescriptionInit;
+  answer?: RTCSessionDescriptionInit;
+  candidates?: RTCIceCandidateInit[];
+}
+
