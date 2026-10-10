@@ -14,6 +14,7 @@ import { User } from '../../types';
 import { Storage } from '../../services/storage';
 import { PYE_SPACES } from '../../services/spaces';
 import { PyeLogo } from '../ui/PyeLogo';
+import { AiCaptionHelper } from './AiCaptionHelper';
 
 interface CreateModalProps {
   currentUser: User | null;
@@ -243,6 +244,7 @@ export const CreateModal: React.FC<CreateModalProps> = ({
               required
               className="w-full p-3 bg-zinc-900 border border-zinc-700 rounded-xl text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#FF007A] resize-none"
             />
+            <AiCaptionHelper draft={caption} onPick={setCaption} />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
