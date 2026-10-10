@@ -26,8 +26,6 @@ export const PixieChatModal: React.FC<PixieChatModalProps> = ({
   onClose,
   onNavigateToView,
 }) => {
-  if (!isOpen) return null;
-
   const [messages, setMessages] = useState<PixieMessage[]>(() => Pixie.getMessages());
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -37,17 +35,21 @@ export const PixieChatModal: React.FC<PixieChatModalProps> = ({
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping]);
 
+  if (!isOpen) return null;
+
   const handleSend = async (textToSend?: string) => {
     const text = (textToSend || inputText).trim();
-    if (!text) return;
+    if (!text || isTyping) return;
 
     setInputText('');
-    setMessages([...Pixie.getMessages()]);
     setIsTyping(true);
 
     try {
-      await Pixie.sendMessage(text);
-      setMessages([...Pixie.getMessages()]);
+      await Pixie.sendMessage(text, () => {
+        setIsTyping(false);
+        setMessages(Pixie.getMessages().map((m) => ({ ...m })));
+      });
+      setMessages(Pixie.getMessages().map((m) => ({ ...m })));
     } catch (e) {
       console.error('Pixie chat error:', e);
     } finally {
