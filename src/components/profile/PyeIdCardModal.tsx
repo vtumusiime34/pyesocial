@@ -95,7 +95,7 @@ export const PyeIdCardModal: React.FC<PyeIdCardModalProps> = ({
 
               {/* Card Header */}
               <div className="relative z-10 flex items-center justify-between border-b border-white/10 pb-4">
-                <PyeLogo size={32} showText showAppixTag />
+                <PyeLogo size={32} showText />
                 <div className="text-right">
                   <div className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
                     Digital Passport
