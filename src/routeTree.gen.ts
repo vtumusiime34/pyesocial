@@ -23,6 +23,7 @@ import { Route as SoundsRouteImport } from './routes/sounds'
 import { Route as SpacesRouteImport } from './routes/spaces'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as ApiAiRouteImport } from './routes/api/ai'
 import { Route as ProfileUsernameRouteImport } from './routes/profile.$username'
 
 const IndexRoute = IndexRouteImport.update({
@@ -95,6 +96,11 @@ const WelcomeRoute = WelcomeRouteImport.update({
   path: '/welcome',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAiRoute = ApiAiRouteImport.update({
+  id: '/api/ai',
+  path: '/api/ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileUsernameRoute = ProfileUsernameRouteImport.update({
   id: '/profile/$username',
   path: '/profile/$username',
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/spaces': typeof SpacesRoute
   '/studio': typeof StudioRoute
   '/welcome': typeof WelcomeRoute
+  '/api/ai': typeof ApiAiRoute
   '/profile/$username': typeof ProfileUsernameRoute
 }
 export interface FileRoutesByTo {
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/spaces': typeof SpacesRoute
   '/studio': typeof StudioRoute
   '/welcome': typeof WelcomeRoute
+  '/api/ai': typeof ApiAiRoute
   '/profile/$username': typeof ProfileUsernameRoute
 }
 export interface FileRoutesById {
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/spaces': typeof SpacesRoute
   '/studio': typeof StudioRoute
   '/welcome': typeof WelcomeRoute
+  '/api/ai': typeof ApiAiRoute
   '/profile/$username': typeof ProfileUsernameRoute
 }
 export interface FileRouteTypes {
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/spaces'
     | '/studio'
     | '/welcome'
+    | '/api/ai'
     | '/profile/$username'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/spaces'
     | '/studio'
     | '/welcome'
+    | '/api/ai'
     | '/profile/$username'
   id:
     | '__root__'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/spaces'
     | '/studio'
     | '/welcome'
+    | '/api/ai'
     | '/profile/$username'
   fileRoutesById: FileRoutesById
 }
@@ -222,6 +234,7 @@ export interface RootRouteChildren {
   SpacesRoute: typeof SpacesRoute
   StudioRoute: typeof StudioRoute
   WelcomeRoute: typeof WelcomeRoute
+  ApiAiRoute: typeof ApiAiRoute
   ProfileUsernameRoute: typeof ProfileUsernameRoute
 }
 
@@ -325,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WelcomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ai': {
+      id: '/api/ai'
+      path: '/api/ai'
+      fullPath: '/api/ai'
+      preLoaderRoute: typeof ApiAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile/$username': {
       id: '/profile/$username'
       path: '/profile/$username'
@@ -350,6 +370,7 @@ const rootRouteChildren: RootRouteChildren = {
   SpacesRoute: SpacesRoute,
   StudioRoute: StudioRoute,
   WelcomeRoute: WelcomeRoute,
+  ApiAiRoute: ApiAiRoute,
   ProfileUsernameRoute: ProfileUsernameRoute,
 }
 export const routeTree = rootRouteImport
