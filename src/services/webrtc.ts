@@ -16,7 +16,6 @@ class WebRTCService {
   private remoteStream: MediaStream | null = null;
   private currentSession: CallSession | null = null;
   private listeners: Set<CallEventListener> = new Set();
-  private broadcastChannel: BroadcastChannel | null = null;
   private audioContext: AudioContext | null = null;
   private ringOscillator: OscillatorNode | null = null;
   private ringGain: GainNode | null = null;
@@ -183,17 +182,13 @@ class WebRTCService {
         offer,
       });
 
-      // Auto-connect loopback simulation if calling an offline contact or self
-      setTimeout(async () => {
+      // No answer after 45 seconds: stop ringing and end the call.
+      setTimeout(() => {
         if (this.currentSession && this.currentSession.id === session.id && this.currentSession.status === 'outgoing') {
-          // Connected simulation
-          this.stopRinging();
-          this.currentSession.status = 'connected';
-          // Use clone of local stream as simulated remote stream so user sees and hears live feedback
-          this.remoteStream = this.localStream!.clone();
-          this.notify({ type: 'call_connected', session: this.currentSession, stream: this.remoteStream });
+          this.endCall();
+          this.notify({ type: 'error', error: 'No answer.' });
         }
-      }, 3500);
+      }, 45000);
 
       return { ok: true, session };
     } catch (e: any) {
@@ -240,10 +235,7 @@ class WebRTCService {
         }
       }
 
-      // If remote stream hasn't arrived yet, initialize clone
-      if (!this.remoteStream && this.localStream) {
-        this.remoteStream = this.localStream.clone();
-      }
+      this.flushCandidates();
 
       this.notify({ type: 'call_connected', session: this.currentSession, stream: this.remoteStream || undefined });
       return { ok: true };
@@ -358,7 +350,7 @@ class WebRTCService {
         this.stopRinging();
         this.currentSession.status = 'connected';
         if (data.answer && this.peerConnection) {
-          this.peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer)).catch(() => {});
+          this.peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer)).then(() => this.flushCandidates()).catch(() => {});
         }
         this.notify({ type: 'call_connected', session: this.currentSession });
       }
@@ -369,14 +361,25 @@ class WebRTCService {
         this.notify({ type: 'call_ended', session: data.session });
       }
     } else if (data.type === 'ICE_CANDIDATE') {
-      if (this.peerConnection && data.candidate) {
+      if (!data.candidate) return;
+      if (this.peerConnection?.remoteDescription) {
         this.peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate)).catch(() => {});
+      } else {
+        this.pendingCandidates.push(data.candidate);
       }
     }
   }
 
+  private pendingCandidates: RTCIceCandidateInit[] = [];
+
+  private flushCandidates() {
+    const pc = this.peerConnection;
+    if (!pc) return;
+    this.pendingCandidates.splice(0).forEach((c) => pc.addIceCandidate(new RTCIceCandidate(c)).catch(() => {}));
+  }
+
   private sendSignalingMessage(msg: any, toUserId?: string) {
-    const target = toUserId || msg?.session?.receiverId && msg.session.receiverId !== this.myUserId ? (toUserId || msg.session.receiverId) : this.peerIdFor();
+    const target = toUserId || this.peerIdFor();
     if (!target) return;
     let ch = this.outChannels.get(target);
     if (!ch) {
@@ -403,6 +406,7 @@ class WebRTCService {
     this.remoteStream = null;
     this.cleanupPeer();
     this.currentSession = null;
+    this.pendingCandidates = [];
   }
 }
 

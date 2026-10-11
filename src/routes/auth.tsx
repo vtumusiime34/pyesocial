@@ -1,3 +1,4 @@
+import { pageHead } from "@/lib/seo";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AuthPage } from "@/components/auth/AuthPage";
 
@@ -8,17 +9,7 @@ export const Route = createFileRoute("/auth")({
       tab: tab === "signup" || tab === "appeal" || tab === "login" ? (tab as "signup" | "appeal" | "login") : "login",
     };
   },
-  head: () => ({
-    meta: [
-      { title: "Log in or join PYE" },
-      {
-        name: "description",
-        content: "Log in to PYE or create your free account and claim your welcome PYE Coins.",
-      },
-      { property: "og:title", content: "Log in or join PYE" },
-      { property: "og:description", content: "Create your free PYE account and claim your welcome PYE Coins." },
-    ],
-  }),
+  head: () => pageHead("/auth"),
   component: AuthRoute,
 });
 

@@ -87,12 +87,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "robots", content: "index, follow" },
       { name: "theme-color", content: "#07070b" },
       { property: "og:site_name", content: "PYE" },
-      { property: "og:title", content: "PYE — The Social Universe for Creators" },
-      {
-        property: "og:description",
-        content: "Pulses, PYES videos, sounds, conferences and PYE Coins — built for creators.",
-      },
-      { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [

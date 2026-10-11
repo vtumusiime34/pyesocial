@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://pyeapp1.lovable.app/</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/welcome</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/pyes</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/spaces</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/sounds</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/games</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/conferences</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/rankings</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/studio</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/search</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/auth</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/auth?tab=signup</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/auth?tab=login</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/messages</loc></url>
-  <url><loc>https://pyeapp1.lovable.app/settings</loc></url>
+  <url><loc>https://pyesocial.lovable.app/</loc></url>
+  <url><loc>https://pyesocial.lovable.app/welcome</loc></url>
+  <url><loc>https://pyesocial.lovable.app/pyes</loc></url>
+  <url><loc>https://pyesocial.lovable.app/spaces</loc></url>
+  <url><loc>https://pyesocial.lovable.app/sounds</loc></url>
+  <url><loc>https://pyesocial.lovable.app/games</loc></url>
+  <url><loc>https://pyesocial.lovable.app/football</loc></url>
+  <url><loc>https://pyesocial.lovable.app/conferences</loc></url>
+  <url><loc>https://pyesocial.lovable.app/rankings</loc></url>
+  <url><loc>https://pyesocial.lovable.app/studio</loc></url>
+  <url><loc>https://pyesocial.lovable.app/search</loc></url>
+  <url><loc>https://pyesocial.lovable.app/auth</loc></url>
+  <url><loc>https://pyesocial.lovable.app/auth?tab=signup</loc></url>
+  <url><loc>https://pyesocial.lovable.app/auth?tab=login</loc></url>
+  <url><loc>https://pyesocial.lovable.app/messages</loc></url>
+  <url><loc>https://pyesocial.lovable.app/settings</loc></url>
 </urlset>
