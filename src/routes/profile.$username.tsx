@@ -1,19 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PyeShell } from "@/components/PyeShell";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/profile/$username")({
-  head: ({ params }) => {
-    const handle = `@${params.username}`;
-    return {
-      meta: [
-        { title: `${handle} on PYE` },
-        { name: "description", content: `See ${handle}'s pulses, PYES videos, followers and PYE activity.` },
-        { property: "og:title", content: `${handle} on PYE` },
-        { property: "og:description", content: `${handle}'s pulses and PYES videos on PYE.` },
-        { property: "og:type", content: "profile" },
-      ],
-    };
-  },
+  head: ({ params }) =>
+    pageHead(`/profile/${params.username}`, {
+      title: `@${params.username} on PYE`,
+      description: `See PYES videos, sounds and activity from @${params.username} on PYE Social Universe.`,
+    }),
   component: ProfileRoute,
 });
 
