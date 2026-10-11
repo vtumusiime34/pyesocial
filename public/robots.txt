@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pyeapp1.lovable.app/sitemap.xml
+Sitemap: https://pyesocial.lovable.app/sitemap.xml

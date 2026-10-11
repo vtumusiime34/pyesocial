@@ -1,14 +1,8 @@
+import { pageHead } from "@/lib/seo";
 import { createFileRoute } from "@tanstack/react-router";
 import { PyeShell } from "@/components/PyeShell";
 
 export const Route = createFileRoute("/messages")({
-  head: () => ({
-    meta: [
-      { title: "Messages | PYE" },
-      { name: "description", content: "Your private PYE conversations with other creators." },
-      { property: "og:title", content: "Messages | PYE" },
-      { property: "og:description", content: "Private conversations on PYE." },
-    ],
-  }),
+  head: () => pageHead("/messages"),
   component: () => <PyeShell view="messages" />,
 });
