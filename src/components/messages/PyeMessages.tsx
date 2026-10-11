@@ -37,7 +37,11 @@ export const PyeMessages: React.FC<PyeMessagesProps> = ({ currentUser, onOpenAut
 
   const activeConversation = conversations.find((c) => c.id === activeConvId) ?? (mobileShowChat ? undefined : conversations[0]);
   const activeId = activeConversation?.id ?? '';
-  const isBlocked = activeConversation ? Storage.isBlocked?.(activeConversation.participant.id) ?? false : false;
+  const isBlocked = activeConversation
+    ? Storage.getBlockedUsers?.().some?.((b: { id?: string; blockedId?: string } | string) =>
+        typeof b === 'string' ? b === activeConversation.participant.id : (b.blockedId ?? b.id) === activeConversation.participant.id,
+      ) ?? false
+    : false;
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ block: 'end' });
