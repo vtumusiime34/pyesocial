@@ -9,7 +9,7 @@ export interface PageSeo {
 
 /** Every public PYE page, with its search/share text. Used by route heads and the SEO status page. */
 export const PUBLIC_PAGES: PageSeo[] = [
-  { path: "/", title: "PYE — The Social Universe for Creators", description: "Share pulses, post PYES videos, discover sounds, join conferences and earn PYE Coins on PYE." },
+  { path: "/", title: "PYE — The Social Universe for Creators", description: "Post PYES videos, discover sounds, join conferences and connect with creators on PYE." },
   { path: "/welcome", title: "Welcome to PYE — Create, Connect, Belong", description: "Discover PYE: short PYES videos, original sounds, arcade games and a creator economy with Silver and Gold PYE Coins." },
   { path: "/pyes", title: "PYES — Short Videos on PYE", description: "Watch and share PYES, the full-screen short videos made by PYE creators." },
   { path: "/spaces", title: "PYE Spaces — Communities by Interest", description: "Explore PYE Spaces for technology, music, gaming, art and more creator communities." },
@@ -23,6 +23,7 @@ export const PUBLIC_PAGES: PageSeo[] = [
   { path: "/auth", title: "Sign in or Sign up — PYE", description: "Log in to PYE or create a free account and get 15 Silver and 2 Gold PYE Coins." },
   { path: "/messages", title: "Messages — PYE", description: "Chat, call and video call other PYE creators." },
   { path: "/settings", title: "Settings — PYE", description: "Manage your PYE account, privacy and preferences." },
+  { path: "/seo", title: "PYE SEO Status — Page Coverage & Indexability", description: "Check PYE public pages for sitemap coverage, canonical URLs and search indexability." },
 ];
 
 const byPath = new Map(PUBLIC_PAGES.map((p) => [p.path, p]));
@@ -32,6 +33,7 @@ export function pageHead(path: string, override?: Partial<PageSeo>) {
   const title = override?.title ?? base.title;
   const description = override?.description ?? base.description;
   const url = `${SITE_URL}${path === "/" ? "" : path}`;
+  const image = `${SITE_URL}/og/${byPath.has(path) ? (path === "/" ? "home" : path.slice(1)) : "profile"}.jpg`;
   return {
     meta: [
       { title },
@@ -40,13 +42,13 @@ export function pageHead(path: string, override?: Partial<PageSeo>) {
       { property: "og:description", content: description },
       { property: "og:url", content: url },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: SHARE_IMAGE },
+      { property: "og:image", content: image },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
-      { name: "twitter:image", content: SHARE_IMAGE },
+      { name: "twitter:image", content: image },
     ],
     links: [{ rel: "canonical", href: url }],
   };

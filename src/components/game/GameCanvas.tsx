@@ -26,6 +26,8 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const matchRef = useRef<FootballMatch | null>(null);
+  const live = useRef({ controls, isPaused, onMatchUpdate });
+  live.current = { controls, isPaused, onMatchUpdate };
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -77,11 +79,11 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({
       lastTime = currentTime;
       const dt = Math.min(rawDt, 0.08); // Clamp to prevent spiral of death
 
-      if (!isPaused && matchRef.current) {
-        const gpControls = gamepadController.poll(controls);
-        matchRef.current.currentControlState = gpControls || controls;
+      if (!live.current.isPaused && matchRef.current) {
+        const gpControls = gamepadController.poll(live.current.controls);
+        matchRef.current.currentControlState = gpControls || live.current.controls;
         matchRef.current.update(dt);
-        onMatchUpdate(matchRef.current);
+        live.current.onMatchUpdate(matchRef.current);
       }
 
       renderer.render(scene, camera);
