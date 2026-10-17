@@ -38,7 +38,7 @@ class PixieService {
         reply.text = full;
         onUpdate?.();
       });
-      if (!reply.text.trim()) reply.text = "I couldn't come up with an answer. Try asking another way.";
+      if (!reply.text.trim()) reply.text = "The AI service returned no answer.";
     } catch (e) {
       reply.text = `⚠️ ${(e as Error).message}`;
     }

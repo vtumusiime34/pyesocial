@@ -33,8 +33,6 @@ export const CreateModal: React.FC<CreateModalProps> = ({
   onOpenAuth,
   onGoConferenceTrigger,
 }) => {
-  if (!isOpen) return null;
-
   const [createType, setCreateType] = useState<'post' | 'short' | 'sound' | 'conference'>('post');
 
   // Form Fields
@@ -46,6 +44,7 @@ export const CreateModal: React.FC<CreateModalProps> = ({
   const [mediaUrl, setMediaUrl] = useState('');
   const [mediaType, setMediaType] = useState<'image' | 'video'>('image');
   const [privacy, setPrivacy] = useState<'public' | 'followers'>('public');
+  if (!isOpen) return null;
 
   // Local file upload handler
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
