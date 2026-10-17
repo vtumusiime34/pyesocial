@@ -29,6 +29,10 @@ import { PyeWalletModal } from "@/components/wallet/PyeWalletModal";
 import { TipModal } from "@/components/wallet/TipModal";
 import { ReportModal } from "@/components/safety/ReportModal";
 import { NotificationsDrawer } from "@/components/notifications/NotificationsDrawer";
+import { CallLayer } from "@/components/messages/CallLayer";
+import { PixieChatModal } from "@/components/pixie/PixieChatModal";
+import { Button } from "@/components/ui/button";
+import { Sparkles } from "lucide-react";
 
 export type PyeView =
   | "home"
@@ -82,6 +86,7 @@ export function PyeShell({ view, profileUsername, initialQuery = "" }: PyeShellP
   const [searchQuery, setSearchQuery] = useState(initialQuery);
 
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showPixie, setShowPixie] = useState(false);
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [showNotificationsDrawer, setShowNotificationsDrawer] = useState(false);
   const [tipTarget, setTipTarget] = useState<{ id: string; name: string } | null>(null);
@@ -313,6 +318,9 @@ export function PyeShell({ view, profileUsername, initialQuery = "" }: PyeShellP
         currentUser={currentUser}
         onOpenAuth={handleOpenAuth}
       />
+      <CallLayer currentUserId={currentUser?.id ?? null} />
+      <Button size="icon" variant="secondary" className="fixed bottom-20 right-4 z-40" title="Ask Pixie" aria-label="Ask Pixie" onClick={() => currentUser ? setShowPixie(true) : handleOpenAuth("login")}><Sparkles /></Button>
+      <PixieChatModal isOpen={showPixie} onClose={() => setShowPixie(false)} onNavigateToView={go} />
 
       <CreateModal
         currentUser={currentUser}

@@ -13,11 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ConferencesRouteImport } from './routes/conferences'
+import { Route as FootballRouteImport } from './routes/football'
 import { Route as GamesRouteImport } from './routes/games'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as PyesRouteImport } from './routes/pyes'
 import { Route as RankingsRouteImport } from './routes/rankings'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as SeoRouteImport } from './routes/seo'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SoundsRouteImport } from './routes/sounds'
 import { Route as SpacesRouteImport } from './routes/spaces'
@@ -46,6 +48,11 @@ const ConferencesRoute = ConferencesRouteImport.update({
   path: '/conferences',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FootballRoute = FootballRouteImport.update({
+  id: '/football',
+  path: '/football',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GamesRoute = GamesRouteImport.update({
   id: '/games',
   path: '/games',
@@ -69,6 +76,11 @@ const RankingsRoute = RankingsRouteImport.update({
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SeoRoute = SeoRouteImport.update({
+  id: '/seo',
+  path: '/seo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -112,11 +124,13 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/conferences': typeof ConferencesRoute
+  '/football': typeof FootballRoute
   '/games': typeof GamesRoute
   '/messages': typeof MessagesRoute
   '/pyes': typeof PyesRoute
   '/rankings': typeof RankingsRoute
   '/search': typeof SearchRoute
+  '/seo': typeof SeoRoute
   '/settings': typeof SettingsRoute
   '/sounds': typeof SoundsRoute
   '/spaces': typeof SpacesRoute
@@ -130,11 +144,13 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/conferences': typeof ConferencesRoute
+  '/football': typeof FootballRoute
   '/games': typeof GamesRoute
   '/messages': typeof MessagesRoute
   '/pyes': typeof PyesRoute
   '/rankings': typeof RankingsRoute
   '/search': typeof SearchRoute
+  '/seo': typeof SeoRoute
   '/settings': typeof SettingsRoute
   '/sounds': typeof SoundsRoute
   '/spaces': typeof SpacesRoute
@@ -149,11 +165,13 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/conferences': typeof ConferencesRoute
+  '/football': typeof FootballRoute
   '/games': typeof GamesRoute
   '/messages': typeof MessagesRoute
   '/pyes': typeof PyesRoute
   '/rankings': typeof RankingsRoute
   '/search': typeof SearchRoute
+  '/seo': typeof SeoRoute
   '/settings': typeof SettingsRoute
   '/sounds': typeof SoundsRoute
   '/spaces': typeof SpacesRoute
@@ -169,11 +187,13 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/conferences'
+    | '/football'
     | '/games'
     | '/messages'
     | '/pyes'
     | '/rankings'
     | '/search'
+    | '/seo'
     | '/settings'
     | '/sounds'
     | '/spaces'
@@ -187,11 +207,13 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/conferences'
+    | '/football'
     | '/games'
     | '/messages'
     | '/pyes'
     | '/rankings'
     | '/search'
+    | '/seo'
     | '/settings'
     | '/sounds'
     | '/spaces'
@@ -205,11 +227,13 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/conferences'
+    | '/football'
     | '/games'
     | '/messages'
     | '/pyes'
     | '/rankings'
     | '/search'
+    | '/seo'
     | '/settings'
     | '/sounds'
     | '/spaces'
@@ -224,11 +248,13 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   ConferencesRoute: typeof ConferencesRoute
+  FootballRoute: typeof FootballRoute
   GamesRoute: typeof GamesRoute
   MessagesRoute: typeof MessagesRoute
   PyesRoute: typeof PyesRoute
   RankingsRoute: typeof RankingsRoute
   SearchRoute: typeof SearchRoute
+  SeoRoute: typeof SeoRoute
   SettingsRoute: typeof SettingsRoute
   SoundsRoute: typeof SoundsRoute
   SpacesRoute: typeof SpacesRoute
@@ -268,6 +294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConferencesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/football': {
+      id: '/football'
+      path: '/football'
+      fullPath: '/football'
+      preLoaderRoute: typeof FootballRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/games': {
       id: '/games'
       path: '/games'
@@ -301,6 +334,13 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/seo': {
+      id: '/seo'
+      path: '/seo'
+      fullPath: '/seo'
+      preLoaderRoute: typeof SeoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -360,11 +400,13 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   ConferencesRoute: ConferencesRoute,
+  FootballRoute: FootballRoute,
   GamesRoute: GamesRoute,
   MessagesRoute: MessagesRoute,
   PyesRoute: PyesRoute,
   RankingsRoute: RankingsRoute,
   SearchRoute: SearchRoute,
+  SeoRoute: SeoRoute,
   SettingsRoute: SettingsRoute,
   SoundsRoute: SoundsRoute,
   SpacesRoute: SpacesRoute,

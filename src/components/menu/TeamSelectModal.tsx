@@ -15,11 +15,10 @@ export const TeamSelectModal: React.FC<TeamSelectModalProps> = ({
   onClose,
   onStartMatch,
 }) => {
-  if (!isOpen) return null;
-
   const [selectedHomeIndex, setSelectedHomeIndex] = useState(0);
   const [selectedAwayIndex, setSelectedAwayIndex] = useState(1);
   const [selectedWeather, setSelectedWeather] = useState<MatchWeather>('night_floodlit');
+  if (!isOpen) return null;
 
   const homeClub = CLUBS[selectedHomeIndex];
   const awayClub = CLUBS[selectedAwayIndex];
